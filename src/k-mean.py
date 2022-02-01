@@ -2,21 +2,8 @@ from random import randint
 import sys
 
 import matplotlib.pyplot as plt
-from math import sqrt
 
-
-class Point:
-    def __init__(self, x=0, y=0):
-        self.x = x
-        self.y = y
-        self.cluster_index = -1
-
-    def __str__(self) -> str:
-        return f"x = {self.x}; y = {self.y}"
-
-    def calc_distance(self, point):
-        return sqrt((self.x - point.x) ** 2 + (self.y - point.y) ** 2)
-
+from point import Point
 
 CLUSTER_COUNT = 5
 MAX_AXIS_VALUE = 100
@@ -25,10 +12,6 @@ points = [Point(randint(0, MAX_AXIS_VALUE), randint(0, MAX_AXIS_VALUE)) for _ in
 cluster_centers = [Point(randint(0, MAX_AXIS_VALUE), randint(0, MAX_AXIS_VALUE)) for _ in range(CLUSTER_COUNT)]
 
 
-def add_cluster_points_to_plot(cluster_points: list[Point]):
-    x_coordinates = [p.x for p in cluster_points]
-    y_coordinates = [p.y for p in cluster_points]
-    plt.scatter(x_coordinates, y_coordinates)
 
 
 def assign_points_to_cluster() -> None:
@@ -41,6 +24,11 @@ def assign_points_to_cluster() -> None:
                 min_distance = dist
                 cluster_index = i
             p.cluster_index = cluster_index
+
+def add_cluster_points_to_plot(cluster_points: list[Point]) -> None:
+    x_coordinates = [p.x for p in cluster_points]
+    y_coordinates = [p.y for p in cluster_points]
+    plt.scatter(x_coordinates, y_coordinates)
 
 
 def display_all_clusters() -> None:
